@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ltx-merger", "ltx-merger.csproj", "{73790624-5949-4FB3-9201-C1DE941C1CAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73790624-5949-4FB3-9201-C1DE941C1CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73790624-5949-4FB3-9201-C1DE941C1CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73790624-5949-4FB3-9201-C1DE941C1CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73790624-5949-4FB3-9201-C1DE941C1CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCCFCAE5-1485-4C11-8013-3B148607F305}
+	EndGlobalSection
+EndGlobal
