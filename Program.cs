@@ -10,9 +10,10 @@ namespace LtxMerger
         /// <param name="output">The file to write to</param>
         static void Main(FileInfo sourceFile, FileInfo modFile, FileInfo output)
         {
-            Console.WriteLine(sourceFile);
-            Console.WriteLine(modFile);
-            Console.WriteLine(output);
+            // TODO: Check if files actually exist
+            Console.WriteLine(File.ReadAllText(sourceFile.FullName));
+            Console.WriteLine(File.ReadAllText(modFile.FullName));
+            Console.WriteLine(output.FullName);
             Console.ReadKey();
         }
     }
