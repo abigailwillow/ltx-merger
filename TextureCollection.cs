@@ -44,19 +44,20 @@ namespace LtxMerger
 
         public static TextureCollection operator +(TextureCollection x, TextureCollection y)
         {
+            TextureCollection textureCollection = x;
             foreach (KeyValuePair<string, string> association in y.Associations)
             {
-                x.Associations.Add(association.Key, association.Value);
+                textureCollection.Associations.Add(association.Key, association.Value);
             }
             foreach (KeyValuePair<string, string> specification in y.Specifications)
             {
-                x.Specifications.Add(specification.Key, specification.Value);
+                textureCollection.Specifications.Add(specification.Key, specification.Value);
             }
             foreach (KeyValuePair<string, string> type in y.Types)
             {
-                x.Types.Add(type.Key, type.Value);
+                textureCollection.Types.Add(type.Key, type.Value);
             }
-            return x;
+            return textureCollection;
         }
     }
 }
