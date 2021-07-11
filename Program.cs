@@ -14,6 +14,7 @@ namespace LtxMerger
             TextureCollection modCollection = new TextureCollection(File.ReadAllText(mods.FullName));
             Console.WriteLine($"Merging {mods.Name} into {source.Name}, please wait...");
             sourceCollection += modCollection;
+            File.WriteAllText("test.ltx", sourceCollection.Serialize());
             Console.WriteLine($"Finished merging to {source.Name}");
         }
     }

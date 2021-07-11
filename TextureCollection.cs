@@ -9,7 +9,7 @@ namespace LtxMerger
         public SortedList<string, string> Associations { get; set; } = new SortedList<string, string>();
         public SortedList<string, string> Specifications { get; set; } = new SortedList<string, string>();
         public SortedList<string, int> Types { get; set; } = new SortedList<string, int>();
-        private Regex _regex = new Regex(@"(?<key>[a-zA-Z0-9\\\.,:_ \[\]]+)\s+=\s+(?<value>[a-zA-Z0-9\\\.,:_ \[\]]+)");
+        private Regex _regex = new Regex(@"(?<key>[a-z0-9\\\.,:_ \[\]]+)\s+=\s+(?<value>[a-z0-9\\\.,:_ \[\]]+)", RegexOptions.IgnoreCase);
 
         public TextureCollection(string text)
         {
@@ -24,22 +24,22 @@ namespace LtxMerger
             string[] lines = text.Split('\n');
             foreach (string line in lines)
             {
-                associationFound = line.Contains("[association]") && (!specificationFound && !typesFound);
-                specificationFound = line.Contains("[specification]") && (!associationFound && !typesFound);
-                typesFound = line.Contains("[types]") && (!associationFound && !specificationFound);
                 GroupCollection groups = _regex.Match(line).Groups;
                 if (associationFound)
                 {
-                    this.Associations.Add(groups["key"].Value, groups["value"].Value);
+                    Associations.Add(groups["key"].Value, groups["value"].Value);
                 }
                 if (specificationFound)
                 {
-                    this.Specifications.Add(groups["key"].Value, groups["value"].Value);
+                    Specifications.Add(groups["key"].Value, groups["value"].Value);
                 }
                 if (typesFound)
                 {
-                    this.Types.Add(groups["key"].Value, int.Parse(groups["value"].Value));
+                    Types.Add(groups["key"].Value, int.Parse(groups["value"].Value));
                 }
+                associationFound = line.Contains("[association]") && (!specificationFound && !typesFound);
+                specificationFound = line.Contains("[specification]") && (!associationFound && !typesFound);
+                typesFound = line.Contains("[types]") && (!associationFound && !specificationFound);
             }
             return this;
         }
@@ -48,19 +48,19 @@ namespace LtxMerger
         {
             StringBuilder output = new StringBuilder();
             output.AppendLine("[association]");
-            foreach (KeyValuePair<string, string> association in this.Associations)
+            foreach (KeyValuePair<string, string> association in Associations)
             {
-                output.AppendLine($"        {association.Key}       = {association.Value}");
+                output.AppendLine($"\t\t{association.Key} = {association.Value}");
             }
             output.AppendLine("[specification]");
-            foreach (KeyValuePair<string, string> specification in this.Specifications)
+            foreach (KeyValuePair<string, string> specification in Specifications)
             {
-                output.AppendLine($"        {specification.Key}       = {specification.Value}");
+                output.AppendLine($"\t\t{specification.Key} = {specification.Value}");
             }
             output.AppendLine("[types]");
-            foreach (KeyValuePair<string, int> type in this.Types)
+            foreach (KeyValuePair<string, int> type in Types)
             {
-                output.AppendLine($"        {type.Key}       = {type.Value}");
+                output.AppendLine($"\t\t{type.Key} = {type.Value}");
             }
             return output.ToString();
         }
@@ -70,15 +70,15 @@ namespace LtxMerger
             TextureCollection textureCollection = x;
             foreach (KeyValuePair<string, string> association in y.Associations)
             {
-                textureCollection.Associations.Add(association.Key, association.Value);
+                textureCollection.Associations[association.Key] = association.Value;
             }
             foreach (KeyValuePair<string, string> specification in y.Specifications)
             {
-                textureCollection.Specifications.Add(specification.Key, specification.Value);
+                textureCollection.Specifications[specification.Key] = specification.Value;
             }
             foreach (KeyValuePair<string, int> type in y.Types)
             {
-                textureCollection.Types.Add(type.Key, type.Value);
+                textureCollection.Types[type.Key] = type.Value;
             }
             return textureCollection;
         }
