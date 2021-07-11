@@ -2,7 +2,7 @@
   "profiles": {
     "ltx-merger": {
       "commandName": "Project",
-      "commandLineArgs": "--source textures.ltx --mods mods.ltx"
+      "commandLineArgs": "--source source.ltx --mods mods.ltx --output out.ltx"
     }
   }
 }
