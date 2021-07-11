@@ -21,7 +21,7 @@ namespace LtxMerger {
                 lastGroup = line.Contains("[association]") ? GroupType.Assocation : lastGroup;
                 lastGroup = line.Contains("[specification]") ? GroupType.Specification : lastGroup;
                 lastGroup = line.Contains("[types]") ? GroupType.Types : lastGroup;
-                if (groups.Count > 1) {
+                if (groups.Count > 2) {
                     switch (lastGroup) {
                         case GroupType.Assocation:
                             Associations[groups["key"].Value] = groups["value"].Value;
