@@ -7,15 +7,18 @@ namespace LtxMerger
     {
         /// <param name="source">The original textures.ltx file</param>
         /// <param name="mods">The file from which the mods should be used</param>
-        static void Main(FileInfo source, FileInfo mods)
+        /// <param name="output">The file to output the merged collection to</param>
+        static void Main(FileInfo source, FileInfo mods, FileInfo output)
         {
-            // TODO: Check if files actually exist
+            output = output ?? source;
+            if (!source.Exists) { Console.WriteLine($"Could not find file {source.FullName}"); return; }
+            if (!mods.Exists) { Console.WriteLine($"Could not find file {mods.FullName}"); return; }
             TextureCollection sourceCollection = new TextureCollection(File.ReadAllText(source.FullName));
             TextureCollection modCollection = new TextureCollection(File.ReadAllText(mods.FullName));
-            Console.WriteLine($"Merging {mods.Name} into {source.Name}, please wait...");
+            Console.WriteLine($"Merging {mods.Name} into {output.Name}, please wait...");
             sourceCollection += modCollection;
-            File.WriteAllText("test.ltx", sourceCollection.Serialize());
-            Console.WriteLine($"Finished merging to {source.Name}");
+            File.WriteAllText(output.FullName, sourceCollection.Serialize());
+            Console.WriteLine($"Finished merging to {output.Name}");
         }
     }
 }

@@ -9,7 +9,7 @@ namespace LtxMerger
         public SortedList<string, string> Associations { get; set; } = new SortedList<string, string>();
         public SortedList<string, string> Specifications { get; set; } = new SortedList<string, string>();
         public SortedList<string, int> Types { get; set; } = new SortedList<string, int>();
-        private Regex _regex = new Regex(@"(?<key>[a-z0-9\\\.,:_ \[\]]+)\s+=\s+(?<value>[a-z0-9\\\.,:_ \[\]]+)", RegexOptions.IgnoreCase);
+        private Regex _regex = new Regex(@"\s+(?<key>[a-z0-9\\\.,:_ \[\]]+)\s+=\s+(?<value>[a-z0-9\\\.,:_ \[\]]+)", RegexOptions.IgnoreCase);
 
         public TextureCollection(string text)
         {
@@ -18,28 +18,33 @@ namespace LtxMerger
 
         public TextureCollection Deserialize(string text)
         {
-            bool associationFound = false;
-            bool specificationFound = false;
-            bool typesFound = false;
+            GroupType lastGroup = GroupType.Unknown;
             string[] lines = text.Split('\n');
             foreach (string line in lines)
             {
                 GroupCollection groups = _regex.Match(line).Groups;
-                if (associationFound)
+                lastGroup = line.Contains("[association]") ? GroupType.Assocation : lastGroup;
+                lastGroup = line.Contains("[specification]") ? GroupType.Specification : lastGroup;
+                lastGroup = line.Contains("[types]") ? GroupType.Types : lastGroup;
+                if (groups.Count > 1)
                 {
-                    Associations.Add(groups["key"].Value, groups["value"].Value);
+                    switch (lastGroup)
+                    {
+                        case GroupType.Assocation:
+                            Associations[groups["key"].Value] = groups["value"].Value;
+                            break;
+                        case GroupType.Specification:
+                            Specifications[groups["key"].Value] = groups["value"].Value;
+                            break;
+                        case GroupType.Types:
+                            Types[groups["key"].Value] = int.Parse(groups["value"].Value);
+                            break;
+                        case GroupType.Unknown:
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                if (specificationFound)
-                {
-                    Specifications.Add(groups["key"].Value, groups["value"].Value);
-                }
-                if (typesFound)
-                {
-                    Types.Add(groups["key"].Value, int.Parse(groups["value"].Value));
-                }
-                associationFound = line.Contains("[association]") && (!specificationFound && !typesFound);
-                specificationFound = line.Contains("[specification]") && (!associationFound && !typesFound);
-                typesFound = line.Contains("[types]") && (!associationFound && !specificationFound);
             }
             return this;
         }
@@ -81,6 +86,14 @@ namespace LtxMerger
                 textureCollection.Types[type.Key] = type.Value;
             }
             return textureCollection;
+        }
+
+        private enum GroupType
+        {
+            Unknown,
+            Assocation,
+            Specification,
+            Types
         }
     }
 }
