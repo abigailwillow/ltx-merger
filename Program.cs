@@ -5,16 +5,16 @@ namespace LtxMerger
 {
     class Program
     {
-        /// <param name="sourceFile">The original textures.ltx file</param>
-        /// <param name="modFile">The file from which the mods should be used</param>
-        /// <param name="output">The file to write to</param>
-        static void Main(FileInfo sourceFile, FileInfo modFile, FileInfo output)
+        /// <param name="source">The original textures.ltx file</param>
+        /// <param name="mods">The file from which the mods should be used</param>
+        static void Main(FileInfo source, FileInfo mods)
         {
             // TODO: Check if files actually exist
-            Console.WriteLine(File.ReadAllText(sourceFile.FullName));
-            Console.WriteLine(File.ReadAllText(modFile.FullName));
-            Console.WriteLine(output.FullName);
-            Console.ReadKey();
+            TextureCollection sourceCollection = new TextureCollection(File.ReadAllText(source.FullName));
+            TextureCollection modCollection = new TextureCollection(File.ReadAllText(mods.FullName));
+            Console.WriteLine($"Merging {mods.Name} into {source.Name}, please wait...");
+            sourceCollection += modCollection;
+            Console.WriteLine($"Finished merging to {source.Name}");
         }
     }
 }
