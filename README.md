@@ -1,5 +1,11 @@
 # ltx-merger
 
+## Description
+
+Merges one ltx file into the other, used for Stalker modding
+
+**Note:** This application relies on [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1/runtime). Without it, the application won't run.
+
 ## Usage
  
 Open your terminal in the folder where you downloaded ltx-merger, then type `ltx-merger --source source.ltx --mods mods.ltx --output output.ltx` where `source.ltx` is the original file, `mods.ltx` is the modded ltx file that you want to merge, and `output.ltx` is the file to create. If the output is not specified the source file will be overwritten instead. You can use the command `ltx-merger -h` to get more information about using the application.
