@@ -7,7 +7,7 @@ namespace LtxMerger {
         public SortedList<string, string> Associations { get; set; } = new SortedList<string, string>();
         public SortedList<string, string> Specifications { get; set; } = new SortedList<string, string>();
         public SortedList<string, int> Types { get; set; } = new SortedList<string, int>();
-        private Regex _regex = new Regex(@"\s+(?<key>[a-z0-9\\\.,:_ \[\]]+)\s+=\s+(?<value>[a-z0-9\\\.,:_ \[\]]+)", RegexOptions.IgnoreCase);
+        private Regex _regex = new Regex(@"\s+(?<key>.+)\s+=\s+(?<value>.+)", RegexOptions.IgnoreCase);
 
         public TextureCollection(string text) {
             this.Deserialize(text);
